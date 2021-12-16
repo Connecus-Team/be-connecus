@@ -7,7 +7,7 @@ const router = express.Router();
 
 const defaultRoutes = [
   {
-    path: '/service',
+    path: '/ceus',
     route: serviceRoute,
   },
 ];

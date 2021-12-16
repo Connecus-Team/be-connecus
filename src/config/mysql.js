@@ -11,6 +11,7 @@ const connectionPool = mysql.createPool({
 });
 connectionPool.getConnection((err, con) => {
   if (err) {
+    // eslint-disable-next-line no-console
     console.log('Database connect failed');
   }
 });
