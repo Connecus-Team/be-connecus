@@ -5,7 +5,8 @@ const sql = require('../sql');
 
 const insertFunding = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, totalFunding, interest, walletAddress } = req.body;
+    const { title, description, date, totalFunding, interest, walletAddress, tokenAddress } = req.body;
+
     const [row] = await db.query(sql.insertFunding, [
       title,
       description,
@@ -14,6 +15,7 @@ const insertFunding = catchAsync(async (req, res) => {
       totalFunding,
       date,
       walletAddress,
+      tokenAddress,
     ]);
     res.status(httpStatus.CREATED).send({
       result: true,
@@ -31,8 +33,8 @@ const insertFunding = catchAsync(async (req, res) => {
 });
 const getFunding = catchAsync(async (req, res) => {
   try {
-    const { walletAddress } = req.query;
-    const [row] = await db.query(sql.getFunding, [walletAddress]);
+    const { tokenAddress } = req.query;
+    const [row] = await db.query(sql.getFunding, [tokenAddress]);
     res.status(httpStatus.CREATED).send({
       result: true,
       data: row,
@@ -85,8 +87,8 @@ const insertVoting = catchAsync(async (req, res) => {
 });
 const getVoting = catchAsync(async (req, res) => {
   try {
-    const { walletAddress } = req.query;
-    const [rows] = await db.query(sql.getVoting, [walletAddress]);
+    const { tokenAddress } = req.query;
+    const [rows] = await db.query(sql.getVoting, [tokenAddress]);
     for (let index = 0; index < rows.length; index += 1) {
       const { id } = rows[index];
       const [optionList] = await db.query(sql.getOptionByVotingId, [id]);
@@ -143,8 +145,8 @@ const insertTask = catchAsync(async (req, res) => {
 });
 const getTask = catchAsync(async (req, res) => {
   try {
-    const { walletAddress } = req.query;
-    const [rows] = await db.query(sql.getTask, [walletAddress]);
+    const { tokenAddress } = req.query;
+    const [rows] = await db.query(sql.getTask, [tokenAddress]);
     for (let index = 0; index < rows.length; index += 1) {
       const { id } = rows[index];
       const [taskList] = await db.query(sql.getOptionByTaskId, [id]);

@@ -1,14 +1,16 @@
 module.exports = {
   // INSERT
   insertFunding:
-    'INSERT INTO ceus_funding (title, description, joiner_interest, link, funding_money, time, wallet_address)  VALUES (?, ?, ?, ?, ?, ?,?)',
-  insertVoting: 'INSERT INTO ceus_voting (title, description, link, time, wallet_address)  VALUES (?, ?, ?,?,?)',
-  insertTask: 'INSERT INTO ceus_task (title, description, link, time, wallet_address)  VALUES (?, ?, ?, ?, ?)',
+    'INSERT INTO ceus_funding (title, description, joiner_interest, link, funding_money, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+  insertVoting:
+    'INSERT INTO ceus_voting (title, description, link, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?)',
+  insertTask:
+    'INSERT INTO ceus_task (title, description, link, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?)',
 
   // GET
-  getFunding: 'SELECT * FROM ceus_funding WHERE wallet_address = ?',
-  getVoting: 'SELECT * FROM ceus_voting WHERE wallet_address = ?',
-  getTask: 'SELECT * FROM ceus_task WHERE wallet_address = ?',
+  getFunding: 'SELECT * FROM ceus_funding WHERE token_address = ?',
+  getVoting: 'SELECT * FROM ceus_voting WHERE token_address = ?',
+  getTask: 'SELECT * FROM ceus_task WHERE token_address = ?',
   getOptionByVotingId: 'SELECT * FROM ceus_voting_option WHERE voting_id = ?',
   getOptionByTaskId: 'SELECT * FROM ceus_task_option WHERE task_id = ?',
   getAllToken: 'SELECT * FROM ceus_token',
