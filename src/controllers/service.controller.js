@@ -32,10 +32,7 @@ const insertFunding = catchAsync(async (req, res) => {
 const getFunding = catchAsync(async (req, res) => {
   try {
     const { walletAddress } = req.query;
-    console.log(walletAddress);
     const [row] = await db.query(sql.getFunding, [walletAddress]);
-
-    console.log(row);
     res.status(httpStatus.CREATED).send({
       result: true,
       data: row,
@@ -101,7 +98,6 @@ const getVoting = catchAsync(async (req, res) => {
       message: 'Voting List',
     });
   } catch (error) {
-    console.log(error);
     res.status(httpStatus.CREATED).send({
       result: false,
       data: error,
@@ -147,11 +143,16 @@ const insertTask = catchAsync(async (req, res) => {
 });
 const getTask = catchAsync(async (req, res) => {
   try {
-    const { walletAddress } = req.body;
-    const [row] = await db.query(sql.getTask, [walletAddress]);
+    const { walletAddress } = req.query;
+    const [rows] = await db.query(sql.getTask, [walletAddress]);
+    for (let index = 0; index < rows.length; index += 1) {
+      const { id } = rows[index];
+      const [taskList] = await db.query(sql.getOptionByTaskId, [id]);
+      rows[index].tasks = taskList;
+    }
     res.status(httpStatus.CREATED).send({
       result: true,
-      data: row,
+      data: rows,
       message: 'Task list',
     });
   } catch (error) {
