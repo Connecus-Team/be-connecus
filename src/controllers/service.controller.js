@@ -5,8 +5,16 @@ const sql = require('../sql');
 
 const insertFunding = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, totalFunding, interest } = req.body;
-    const [row] = await db.query(sql.insertFunding, [title, description, interest, '`update', totalFunding, date]);
+    const { title, description, date, totalFunding, interest, walletAddress } = req.body;
+    const [row] = await db.query(sql.insertFunding, [
+      title,
+      description,
+      interest,
+      '`update',
+      totalFunding,
+      date,
+      walletAddress,
+    ]);
     res.status(httpStatus.CREATED).send({
       result: true,
       data: row.insertId,
@@ -24,9 +32,9 @@ const insertFunding = catchAsync(async (req, res) => {
 
 const insertVoting = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, options } = req.body;
+    const { title, description, date, options, walletAddress } = req.body;
 
-    const [row] = await db.query(sql.insertVoting, [title, description, 'link', date]);
+    const [row] = await db.query(sql.insertVoting, [title, description, 'link', date, walletAddress]);
     let insertVotingOptionQuery = null;
     const { insertId } = row;
     try {
@@ -60,8 +68,8 @@ const insertVoting = catchAsync(async (req, res) => {
 
 const insertTask = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, tasks } = req.body;
-    const [row] = await db.query(sql.insertTask, [title, description, 'link', date]);
+    const { title, description, date, tasks, walletAddress } = req.body;
+    const [row] = await db.query(sql.insertTask, [title, description, 'link', date, walletAddress]);
 
     let insertTaskOptionQuery = null;
     const { insertId } = row;
