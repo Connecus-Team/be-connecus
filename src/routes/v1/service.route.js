@@ -4,8 +4,8 @@ const serviceController = require('../../controllers/service.controller');
 
 const router = express.Router();
 
-router.route('/funding').post(serviceController.insertFunding);
-router.route('/voting').post(serviceController.insertVoting);
-router.route('/task').post(serviceController.insertTask);
+router.route('/funding').get(serviceController.getFunding).post(serviceController.insertFunding);
+router.route('/voting').get(serviceController.getVoting).post(serviceController.insertVoting);
+router.route('/task').get(serviceController.getTask).post(serviceController.insertTask);
 
 module.exports = router;

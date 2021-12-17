@@ -4,6 +4,14 @@ module.exports = {
     'INSERT INTO ceus_funding (title, description, joiner_interest, link, funding_money, time, wallet_address)  VALUES (?, ?, ?, ?, ?, ?,?)',
   insertVoting: 'INSERT INTO ceus_voting (title, description, link, time, wallet_address)  VALUES (?, ?, ?,?,?)',
   insertTask: 'INSERT INTO ceus_task (title, description, link, time, wallet_address)  VALUES (?, ?, ?, ?, ?)',
+
+  // GET
+  getFunding: 'SELECT * FROM ceus_funding WHERE wallet_address = ?',
+  getVoting: 'SELECT * FROM ceus_voting WHERE wallet_address = ?',
+  getTask: 'SELECT * FROM ceus_task WHERE wallet_address = ?',
+  getOptionByVotingId: 'SELECT * FROM ceus_voting_option WHERE voting_id = ?',
+  getOptionByTaskId: 'SELECT * FROM ceus_task_option WHERE task_id = ?',
+
   insertVotingOption: (voteOption = 1) => {
     if (voteOption < 1) throw new Error('voteOption count error');
     let query = 'INSERT INTO ceus_voting_option ( content, voting_id) VALUES';

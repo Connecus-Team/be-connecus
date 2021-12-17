@@ -29,6 +29,27 @@ const insertFunding = catchAsync(async (req, res) => {
     });
   }
 });
+const getFunding = catchAsync(async (req, res) => {
+  try {
+    const { walletAddress } = req.query;
+    console.log(walletAddress);
+    const [row] = await db.query(sql.getFunding, [walletAddress]);
+
+    console.log(row);
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: row,
+      message: 'Funding list',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Funding list error',
+    });
+  }
+});
 
 const insertVoting = catchAsync(async (req, res) => {
   try {
@@ -62,6 +83,29 @@ const insertVoting = catchAsync(async (req, res) => {
       result: false,
       data: error,
       message: 'Insert Error',
+    });
+  }
+});
+const getVoting = catchAsync(async (req, res) => {
+  try {
+    const { walletAddress } = req.query;
+    const [rows] = await db.query(sql.getVoting, [walletAddress]);
+    for (let index = 0; index < rows.length; index += 1) {
+      const { id } = rows[index];
+      const [optionList] = await db.query(sql.getOptionByVotingId, [id]);
+      rows[index].options = optionList;
+    }
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: rows,
+      message: 'Voting List',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Voting list error',
     });
   }
 });
@@ -101,9 +145,30 @@ const insertTask = catchAsync(async (req, res) => {
     });
   }
 });
+const getTask = catchAsync(async (req, res) => {
+  try {
+    const { walletAddress } = req.body;
+    const [row] = await db.query(sql.getTask, [walletAddress]);
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: row,
+      message: 'Task list',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Task list error',
+    });
+  }
+});
 
 module.exports = {
   insertFunding,
+  getFunding,
   insertVoting,
+  getVoting,
   insertTask,
+  getTask,
 };
