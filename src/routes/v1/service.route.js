@@ -16,9 +16,9 @@ const serviceController = require('../../controllers/service.controller');
 
 const router = express.Router();
 
-router.route('/funding').get(serviceController.getFunding).post(serviceController.insertFunding);
-router.route('/voting').get(serviceController.getVoting).post(serviceController.insertVoting);
-router.route('/task').get(serviceController.getTask).post(serviceController.insertTask);
+router.route('/funding').get(serviceController.getFunding).post(upload.array('file'), serviceController.insertFunding);
+router.route('/voting').get(serviceController.getVoting).post(upload.array('file'), serviceController.insertVoting);
+router.route('/task').get(serviceController.getTask).post(upload.array('file'), serviceController.insertTask);
 router.route('/all-token').get(serviceController.getAllToken);
 
 module.exports = router;

@@ -5,13 +5,15 @@ const sql = require('../sql');
 
 const insertFunding = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, totalFunding, interest, walletAddress, tokenAddress } = req.body;
-
+    const files = req.files || 'NULL';
+    const { originalname } = files[0];
+    const data = JSON.parse(req.body.params);
+    const { title, description, date, totalFunding, interest, walletAddress, tokenAddress } = data;
     const [row] = await db.query(sql.insertFunding, [
       title,
       description,
       interest,
-      '`update',
+      `/${originalname}`,
       totalFunding,
       date,
       walletAddress,
@@ -52,9 +54,19 @@ const getFunding = catchAsync(async (req, res) => {
 
 const insertVoting = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, options, walletAddress } = req.body;
+    const files = req.files || 'NULL';
+    const { originalname } = files[0];
+    const data = JSON.parse(req.body.params);
+    const { title, description, date, options, walletAddress, tokenAddress } = data;
 
-    const [row] = await db.query(sql.insertVoting, [title, description, 'link', date, walletAddress]);
+    const [row] = await db.query(sql.insertVoting, [
+      title,
+      description,
+      `/${originalname}`,
+      date,
+      walletAddress,
+      tokenAddress,
+    ]);
     let insertVotingOptionQuery = null;
     const { insertId } = row;
     try {
@@ -110,8 +122,18 @@ const getVoting = catchAsync(async (req, res) => {
 
 const insertTask = catchAsync(async (req, res) => {
   try {
-    const { title, description, date, tasks, walletAddress } = req.body;
-    const [row] = await db.query(sql.insertTask, [title, description, 'link', date, walletAddress]);
+    const files = req.files || 'NULL';
+    const { originalname } = files[0];
+    const data = JSON.parse(req.body.params);
+    const { title, description, date, tasks, walletAddress, tokenAddress } = data;
+    const [row] = await db.query(sql.insertTask, [
+      title,
+      description,
+      `/${originalname}`,
+      date,
+      walletAddress,
+      tokenAddress,
+    ]);
 
     let insertTaskOptionQuery = null;
     const { insertId } = row;
