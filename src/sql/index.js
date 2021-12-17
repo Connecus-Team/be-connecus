@@ -11,6 +11,7 @@ module.exports = {
   getTask: 'SELECT * FROM ceus_task WHERE wallet_address = ?',
   getOptionByVotingId: 'SELECT * FROM ceus_voting_option WHERE voting_id = ?',
   getOptionByTaskId: 'SELECT * FROM ceus_task_option WHERE task_id = ?',
+  getAllToken: 'SELECT * FROM ceus_token',
 
   insertVotingOption: (voteOption = 1) => {
     if (voteOption < 1) throw new Error('voteOption count error');

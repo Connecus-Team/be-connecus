@@ -164,6 +164,23 @@ const getTask = catchAsync(async (req, res) => {
     });
   }
 });
+const getAllToken = catchAsync(async (req, res) => {
+  try {
+    const [rows] = await db.query(sql.getAllToken);
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: rows,
+      message: 'Task list',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Task list error',
+    });
+  }
+});
 
 module.exports = {
   insertFunding,
@@ -171,5 +188,6 @@ module.exports = {
   insertVoting,
   getVoting,
   insertTask,
+  getAllToken,
   getTask,
 };
