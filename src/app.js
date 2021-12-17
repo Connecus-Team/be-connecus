@@ -38,6 +38,9 @@ if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
 
+// static folder
+app.use('/api/files', express.static('update', { fallthrough: false }));
+
 // v1 api routes
 app.use('/', routes);
 

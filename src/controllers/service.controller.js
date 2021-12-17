@@ -205,6 +205,24 @@ const getAllToken = catchAsync(async (req, res) => {
     });
   }
 });
+const getTokenInfoByTokenAddress = catchAsync(async (req, res) => {
+  try {
+    const { tokenAddress } = req.query;
+    const [row] = await db.query(sql.getTokenInfoByTokenAddress, [tokenAddress]);
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: row.length !== 0 ? row[0] : null,
+      message: 'Task list',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Get token information by token address',
+    });
+  }
+});
 
 module.exports = {
   insertFunding,
@@ -214,4 +232,5 @@ module.exports = {
   insertTask,
   getAllToken,
   getTask,
+  getTokenInfoByTokenAddress,
 };
