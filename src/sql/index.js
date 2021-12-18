@@ -6,6 +6,8 @@ module.exports = {
     'INSERT INTO ceus_voting (title, description, link, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?)',
   insertTask:
     'INSERT INTO ceus_task (title, description, link, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?)',
+  insertToken:
+    'INSERT INTO ceus_token (token_name, symbol, token_description, token_address, wallet_address, link, total_supply)  VALUES (?, ?, ?, ?, ?, ?, ?)',
 
   // GET
   getFunding: 'SELECT * FROM ceus_funding WHERE token_address = ?',

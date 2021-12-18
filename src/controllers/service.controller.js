@@ -165,6 +165,36 @@ const insertTask = catchAsync(async (req, res) => {
     });
   }
 });
+const insertToken = catchAsync(async (req, res) => {
+  try {
+    const files = req.files || 'NULL';
+    const { originalname } = files[0];
+    const data = JSON.parse(req.body.params);
+    const { name, symBol, description, walletAddress, tokenAddress, totalSupply } = data;
+    const [row] = await db.query(sql.insertToken, [
+      name,
+      symBol,
+      description,
+      tokenAddress,
+      walletAddress,
+      `/${originalname}`,
+      totalSupply,
+    ]);
+
+    res.status(httpStatus.CREATED).send({
+      result: true,
+      data: row.insertId,
+      message: 'Insert Token',
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.CREATED).send({
+      result: false,
+      data: error,
+      message: 'Insert Error',
+    });
+  }
+});
 const getTask = catchAsync(async (req, res) => {
   try {
     const { tokenAddress } = req.query;
@@ -233,4 +263,5 @@ module.exports = {
   getAllToken,
   getTask,
   getTokenInfoByTokenAddress,
+  insertToken,
 };

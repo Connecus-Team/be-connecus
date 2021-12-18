@@ -20,6 +20,9 @@ router.route('/funding').get(serviceController.getFunding).post(upload.array('fi
 router.route('/voting').get(serviceController.getVoting).post(upload.array('file'), serviceController.insertVoting);
 router.route('/task').get(serviceController.getTask).post(upload.array('file'), serviceController.insertTask);
 router.route('/all-token').get(serviceController.getAllToken);
-router.route('/token').get(serviceController.getTokenInfoByTokenAddress);
+router
+  .route('/token')
+  .get(serviceController.getTokenInfoByTokenAddress)
+  .post(upload.array('file'), serviceController.insertToken);
 
 module.exports = router;
