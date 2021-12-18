@@ -170,7 +170,7 @@ const insertToken = catchAsync(async (req, res) => {
     const files = req.files || 'NULL';
     const { originalname } = files[0];
     const data = JSON.parse(req.body.params);
-    const { name, symBol, description, walletAddress, tokenAddress, totalSupply } = data;
+    const { name, symBol, description, walletAddress, tokenAddress, totalSupply, facebookUrl } = data;
     const [row] = await db.query(sql.insertToken, [
       name,
       symBol,
@@ -179,6 +179,7 @@ const insertToken = catchAsync(async (req, res) => {
       walletAddress,
       `/${originalname}`,
       totalSupply,
+      facebookUrl,
     ]);
 
     res.status(httpStatus.CREATED).send({

@@ -7,7 +7,7 @@ module.exports = {
   insertTask:
     'INSERT INTO ceus_task (title, description, link, time, wallet_address, token_address)  VALUES (?, ?, ?, ?, ?, ?)',
   insertToken:
-    'INSERT INTO ceus_token (token_name, symbol, token_description, token_address, wallet_address, link, total_supply)  VALUES (?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO ceus_token (token_name, symbol, token_description, token_address, wallet_address, link, total_supply, facebook_url)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
 
   // GET
   getFunding: 'SELECT * FROM ceus_funding WHERE token_address = ?',
@@ -36,7 +36,6 @@ module.exports = {
       query += '(?, ?,?)';
       if (i + 1 !== taskOption) query += ' , ';
     }
-    console.log('task', query);
     return query;
   },
 };
